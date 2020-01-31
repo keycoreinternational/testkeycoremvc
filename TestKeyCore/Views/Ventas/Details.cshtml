@@ -1,0 +1,50 @@
+﻿@model TestKeyCore.Models.Ventas
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ventas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Dt_FechaVenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_FechaVenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nu_Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nu_Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vendedores.Tx_Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendedores.Tx_Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Productos.Tx_Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Productos.Tx_Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdVenta }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TestKeyCore.Models.Ventas>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Dt_FechaVenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nu_Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vendedores.Tx_Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos.Tx_Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dt_FechaVenta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nu_Cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vendedores.Tx_Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Productos.Tx_Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdVenta }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdVenta }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdVenta })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Vendedores" EntityType="Model.Store.Vendedores" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Productos" EntityType="Model.Store.Productos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ventas" EntityType="Model.Store.Ventas" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="VendedoresVentas" Association="Model.Store.VendedoresVentas">
+      <End Role="Vendedores" EntitySet="Vendedores" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+    <AssociationSet Name="ProductosVentas" Association="Model.Store.ProductosVentas">
+      <End Role="Productos" EntitySet="Productos" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Vendedores">
+    <Key>
+      <PropertyRef Name="IdVendedor" />
+    </Key>
+    <Property Name="IdVendedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tx_Nombre" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Productos">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tx_Descripcion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nu_Precio" Type="decimal" Nullable="false" Precision="20" Scale="2" />
+  </EntityType>
+  <EntityType Name="Ventas">
+    <Key>
+      <PropertyRef Name="IdVenta" />
+    </Key>
+    <Property Name="IdVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VendedoresIdVendedor" Type="int" Nullable="false" />
+    <Property Name="ProductosIdProducto" Type="int" Nullable="false" />
+    <Property Name="Dt_FechaVenta" Type="datetime" Nullable="false" />
+    <Property Name="Nu_Cantidad" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="VendedoresVentas">
+    <End Role="Vendedores" Type="Model.Store.Vendedores" Multiplicity="1" />
+    <End Role="Ventas" Type="Model.Store.Ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedores">
+        <PropertyRef Name="IdVendedor" />
+      </Principal>
+      <Dependent Role="Ventas">
+        <PropertyRef Name="VendedoresIdVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductosVentas">
+    <End Role="Productos" Type="Model.Store.Productos" Multiplicity="1" />
+    <End Role="Ventas" Type="Model.Store.Ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Productos">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="Ventas">
+        <PropertyRef Name="ProductosIdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Vendedores" EntityType="Model.Vendedores" />
+          <EntitySet Name="Productos" EntityType="Model.Productos" />
+          <EntitySet Name="Ventas" EntityType="Model.Ventas" />
+          <AssociationSet Name="VendedoresVentas" Association="Model.VendedoresVentas">
+            <End Role="Vendedores" EntitySet="Vendedores" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="ProductosVentas" Association="Model.ProductosVentas">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Vendedores">
+          <Key>
+            <PropertyRef Name="IdVendedor" />
+          </Key>
+          <Property Name="IdVendedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tx_Nombre" Type="String" Nullable="false" />
+          <NavigationProperty Name="Ventas" Relationship="Model.VendedoresVentas" FromRole="Vendedores" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tx_Descripcion" Type="String" Nullable="false" />
+          <NavigationProperty Name="Ventas" Relationship="Model.ProductosVentas" FromRole="Productos" ToRole="Ventas" />
+          <Property Name="Nu_Precio" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="IdVenta" />
+          </Key>
+          <Property Name="IdVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Vendedores" Relationship="Model.VendedoresVentas" FromRole="Ventas" ToRole="Vendedores" />
+          <Property Name="VendedoresIdVendedor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Model.ProductosVentas" FromRole="Ventas" ToRole="Productos" />
+          <Property Name="ProductosIdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Dt_FechaVenta" Type="DateTime" Nullable="false" />
+          <Property Name="Nu_Cantidad" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="VendedoresVentas">
+          <End Type="Model.Vendedores" Role="Vendedores" Multiplicity="1" />
+          <End Type="Model.Ventas" Role="Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="IdVendedor" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="VendedoresIdVendedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductosVentas">
+          <End Type="Model.Productos" Role="Productos" Multiplicity="1" />
+          <End Type="Model.Ventas" Role="Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="ProductosIdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
+    <EntitySetMapping Name="Vendedores">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Vendedores)">
+        <MappingFragment StoreEntitySet="Vendedores">
+          <ScalarProperty Name="IdVendedor" ColumnName="IdVendedor" />
+          <ScalarProperty Name="Tx_Nombre" ColumnName="Tx_Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Productos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Productos)">
+        <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="Tx_Descripcion" ColumnName="Tx_Descripcion" />
+          <ScalarProperty Name="Nu_Precio" ColumnName="Nu_Precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ventas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Ventas)">
+        <MappingFragment StoreEntitySet="Ventas">
+          <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+          <ScalarProperty Name="VendedoresIdVendedor" ColumnName="VendedoresIdVendedor" />
+          <ScalarProperty Name="ProductosIdProducto" ColumnName="ProductosIdProducto" />
+          <ScalarProperty Name="Dt_FechaVenta" ColumnName="Dt_FechaVenta" />
+          <ScalarProperty Name="Nu_Cantidad" ColumnName="Nu_Cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
